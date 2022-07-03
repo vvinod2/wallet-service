@@ -35,18 +35,7 @@ public class WalletserviceApplication implements CommandLineRunner {
 
 	@Override
 	public void run(String... args) throws Exception {
-		//createSampleData();
-	}
-
-	private void createSampleData() {
-		Account account1 = new Account(null, "test acc 1", null, null);
-		accountRepository.save(account1);
-		Player player1 = new Player(null, "pl1 name", account1);
-		playerRepository.save(player1);
-		Transaction transaction1 = new Transaction(null, "ts1", "GBP", "GBP", 100.50d, account1, ZonedDateTime.of(LocalDate.now(), LocalTime.now(), ZoneId.systemDefault()));
-		Transaction transaction2 = new Transaction(null, "ts2", "GBP", "GBP", 100.50d, account1, ZonedDateTime.of(LocalDate.now(), LocalTime.now(), ZoneId.systemDefault()));
-		transactionRepository.save(transaction1);
-		transactionRepository.save(transaction2);
+		//Anything if needed to be loaded in future;
 	}
 
 

@@ -25,4 +25,6 @@ public class Transaction{
     private Account account;
 
     private ZonedDateTime transactionDateTime;
+
+    private String transactionNote;
 }

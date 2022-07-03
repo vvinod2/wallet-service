@@ -29,6 +29,8 @@ public class Transaction {
 
     private ZonedDateTime transactionDateTime;
 
+    private String transactionNote;
+
     public Transaction(com.wallet.walletservice.domain.model.Transaction domainTransaction) {
         this.transactionId = domainTransaction.getTransactionId();
         this.transactionKey = domainTransaction.getTransactionKey();
@@ -37,6 +39,7 @@ public class Transaction {
         this.inputCurrencyType = domainTransaction.getInputCurrencyType();
         this.savedCurrencyType = domainTransaction.getSavedCurrencyType();
         this.transactionDateTime = domainTransaction.getTransactionDateTime();
+        this.transactionNote = domainTransaction.getTransactionNote();
     }
 
     public com.wallet.walletservice.domain.model.Transaction toDomain() {
@@ -48,6 +51,7 @@ public class Transaction {
                 .inputCurrencyType(this.inputCurrencyType)
                 .savedCurrencyType(this.savedCurrencyType)
                 .transactionDateTime(this.transactionDateTime)
+                .transactionNote(this.transactionNote)
                 .build();
     }
 
