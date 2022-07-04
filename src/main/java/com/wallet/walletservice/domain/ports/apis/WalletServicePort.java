@@ -3,11 +3,10 @@ package com.wallet.walletservice.domain.ports.apis;
 import com.wallet.walletservice.domain.model.Account;
 import com.wallet.walletservice.domain.model.CommonResponse;
 import com.wallet.walletservice.domain.model.Transaction;
-import org.springframework.http.ResponseEntity;
 
 import java.util.List;
 
-public interface TransactionPort {
+public interface WalletServicePort {
 
     CommonResponse addTransaction(Long playerId, Transaction transaction);
 

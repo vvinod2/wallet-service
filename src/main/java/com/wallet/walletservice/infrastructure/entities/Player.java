@@ -33,7 +33,7 @@ public class Player {
         return com.wallet.walletservice.domain.model.Player.builder()
                 .playerId(this.playerId)
                 .playerName(this.playerName)
-                .account(this.getAccount().toDomain())
+                .account(getDomainAccount())
                 .build();
     }
 

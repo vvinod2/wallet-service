@@ -5,7 +5,7 @@ import com.wallet.walletservice.domain.model.Account;
 import com.wallet.walletservice.domain.model.CommonResponse;
 import com.wallet.walletservice.domain.model.Player;
 import com.wallet.walletservice.domain.model.Transaction;
-import com.wallet.walletservice.domain.ports.apis.TransactionPort;
+import com.wallet.walletservice.domain.ports.apis.WalletServicePort;
 import com.wallet.walletservice.domain.ports.spis.AccountPersistancePort;
 import com.wallet.walletservice.domain.ports.spis.PlayerPersistancePort;
 import com.wallet.walletservice.domain.ports.spis.TransactionPersistancePort;
@@ -22,7 +22,7 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Component
-public class TransactionAdapter implements TransactionPort {
+public class WalletServiceAdapter implements WalletServicePort {
 
     private TransactionPersistancePort transactionPersistancePort;
 
@@ -32,9 +32,9 @@ public class TransactionAdapter implements TransactionPort {
 
 
     @Autowired
-    public TransactionAdapter(TransactionPersistancePort transactionPersistancePort,
-                              PlayerPersistancePort playerPersistancePort,
-                              AccountPersistancePort accountPersistancePort) {
+    public WalletServiceAdapter(TransactionPersistancePort transactionPersistancePort,
+                                PlayerPersistancePort playerPersistancePort,
+                                AccountPersistancePort accountPersistancePort) {
         this.transactionPersistancePort = transactionPersistancePort;
         this.playerPersistancePort = playerPersistancePort;
         this.accountPersistancePort = accountPersistancePort;
@@ -92,7 +92,7 @@ public class TransactionAdapter implements TransactionPort {
     }
 
     private boolean checkBalanceEligibility(Double currentBalance, Double transactionAmount) {
-        if (currentBalance + transactionAmount > 0) {
+        if (currentBalance + transactionAmount >= 0) {
             return true;
         }
         return false;
