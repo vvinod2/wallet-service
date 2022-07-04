@@ -4,7 +4,7 @@ import com.wallet.walletservice.application.rest.model.Account;
 import com.wallet.walletservice.application.rest.model.CommonResponse;
 import com.wallet.walletservice.application.rest.model.Transaction;
 import com.wallet.walletservice.domain.WalletServiceException;
-import com.wallet.walletservice.domain.ports.apis.TransactionPort;
+import com.wallet.walletservice.domain.ports.apis.WalletServicePort;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
@@ -18,19 +18,18 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import java.util.List;
 import java.util.stream.Collectors;
 
 @RestController
 @Api(produces = "application/json", value = "Operations to manage credit and debit transactions of a player")
 public class WalletServiceController {
 
-    private TransactionPort transactionPort;
+    private WalletServicePort walletServicePort;
 
 
     @Autowired
-    public WalletServiceController(TransactionPort transactionPort) {
-        this.transactionPort = transactionPort;
+    public WalletServiceController(WalletServicePort walletServicePort) {
+        this.walletServicePort = walletServicePort;
     }
 
     @PostMapping(path = "/player/{playerId}/transaction")
@@ -46,7 +45,7 @@ public class WalletServiceController {
                                                          @RequestBody @Valid Transaction transaction) {
         try {
             return new ResponseEntity<>(
-                    new CommonResponse(transactionPort.addTransaction(playerId,
+                    new CommonResponse(walletServicePort.addTransaction(playerId,
                             transaction.toDomain())),
                     HttpStatus.CREATED);
         } catch (WalletServiceException walletServiceException) {
@@ -70,7 +69,7 @@ public class WalletServiceController {
     public ResponseEntity getAllTransactionsOfAPlayer(@PathVariable(name = "playerId") Long playerId) {
         try {
             return new ResponseEntity(
-                    CollectionModel.of(transactionPort.getAllTransactionHistory(playerId)
+                    CollectionModel.of(walletServicePort.getAllTransactionHistory(playerId)
                     .stream()
                     .map(Transaction::new)
                     .map(transaction -> EntityModel.of(transaction))
@@ -112,7 +111,7 @@ public class WalletServiceController {
     )
     public ResponseEntity getAccountDetails(@PathVariable(name = "playerId") Long playerId) {
         try {
-            Account account = new Account(transactionPort.getAccountDetailsOfAPlayer(playerId));
+            Account account = new Account(walletServicePort.getAccountDetailsOfAPlayer(playerId));
             return new ResponseEntity<>( EntityModel.of(account)
                     .add(Link.of(
                             getHrefLinkForAccount(account.getAccountId()))
